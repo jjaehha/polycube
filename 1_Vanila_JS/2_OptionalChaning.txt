@@ -1,0 +1,50 @@
+2. Optional Chaning에 대해 서술 하고 하위 호환을 위해 어떻게 표기해야 하는지 서술하시오.
+
+    Optional Chaning은 객체의 중첩된 속성이나 메서드에 안전하게 접근할 수 있도록 해주는 문법적인 기능이다.
+    이 기능은 객체가 nullish(null 또는 undefined)인 경우에도 에러를 발생시키지 않고 안전하게 속성에 접근할 수 있게 한다.
+
+    ex)
+
+        const my = {
+            name: "김재하",
+            info: {
+                age: "21",
+                mail: "rlawogk6953@naver.com"
+            }
+        }
+
+        // Optional Chaning을 사용하여 위 객체의 'age' 속성에 안전하게 접근할 수 있습니다.
+
+        const age = my?.info?.age;
+        console.log(age);
+
+        // 결과:
+        // 21
+
+        // 위의 코드에서 Optional Chaning 연산자 '?.'는 객체가 nullish인 경우에도 안전하게 속성에 접근할 수 있게 한다.
+        // 만약 'my'나 'info'가 nullish인 경우에는 'age'에는 undefined가 할당된다.
+        // (본래 발생되어야 할 'Typeerror'가 발생하지 않는다.)
+
+    하위 호환을 위해서는 Optional Chaning을 지원하지 않는 이전 버전의 환경에서 코드가 동작할 수 있도록 해야 한다.
+    이를 위해 조건문(식)을 사용하여 속성에 접근하기전에 해당 속성이 nullish인지 확인하는 방법을 사용할 수 있다.
+
+        ex) if문
+            let age;
+            if (my && my.info) {
+                age = my.info.age;
+            } else {
+                age = "undefined";
+            }
+            console.log(age); 
+            // 결과
+            // 21 or undefined
+
+        ex) 삼항 연산자
+
+            const age = my.info ? my.info.age : undefined;
+            console.log(age)
+            // 결과
+            // 21 or undefined
+
+        위의 두 코드는 Optional Chaning을 사용하지 않고 동일한 동작을 수행한다.
+        이렇게 함으로써 이전 버전에서도 정상적으로 동작하면서도 최신 버전과의 호환성을 유지할 수 있다
